@@ -47,6 +47,12 @@ cmd_intel() {
     
 }
 
+cmd_old_intel() {
+    echo "Installing Older Driver for Intel..."
+    # old intel logic here
+    dnf install libva-intel-driver -y
+}
+
 cmd_amd() {
     echo "Installing Driver for AMD..."
     # amd logic here
@@ -71,6 +77,7 @@ usage() {
 Usage: $0 {intel|amd|vbox|nvidia}
 Commands:
   intel      Install Intel media driver
+  old-intel  Install older Intel media driver
   amd        Install AMD media driver
   vbox       Install VirtualBox Guest Additions
   nvidia     Install NVIDIA driver (not yet implemented)
@@ -96,6 +103,11 @@ main() {
         nvidia)
             # example of reusing existing case branches while continuing flow
             cmd_nvidia
+            ;;
+
+        old-intel)
+            # example of reusing existing case branches while continuing flow
+            cmd_old_intel
             ;;
         *)
             echo "Unknown command: ${1:-}"
