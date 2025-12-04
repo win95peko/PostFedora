@@ -29,13 +29,19 @@ pre_action() {
 
 post_action() {
     echo ">>> Post-action: Installing Skanlite, Printer Support, and more packages."
-    dnf install skanlite sane-backends-drivers-scanners vlc -y
+    dnf install skanlite sane-backends-drivers-scanners vlc libreoffice-langpack-es curl cabextract fontconfig xorg-x11-font-utils -y
     dnf install cups system-config-printer -y
     echo ">>> Post-action: Installing curl and git."
     dnf install curl git -y
     echo ">>> Post-action: Installing curated support for printers."
     cd './PPD Files'
     cp -r ./* /usr/share/ppd/
+    cd ..
+    echo ">>> Post-action: Installing fonts."
+    rpm -i --nodigest https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm
+    cd './Fonts'
+    cp -r ./* /usr/share/fonts/
+    fc-cache -fv
     cd ..
     echo ">>> Installation complete. Please reboot to make sure all changes take effect."
 }
@@ -88,16 +94,18 @@ EOF
 main() {
     [[ $# -ge 1 ]] || usage
 
-    pre_action
 
     case "${1:-}" in
         intel)
+            pre_action
             cmd_intel
             ;;
         amd)
+            pre_action
             cmd_amd
             ;;
         vbox)
+            pre_action
             cmd_vbox
             ;;
         nvidia)
@@ -106,7 +114,9 @@ main() {
             ;;
 
         old-intel)
+
             # example of reusing existing case branches while continuing flow
+            pre_action
             cmd_old_intel
             ;;
         *)
