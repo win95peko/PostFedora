@@ -7,6 +7,7 @@
 - Install VLC and SkanLite.
 - Adds Multimedia Support from RPM Fusion recommendations(NVidia not yet supported).
 - Also GIT and Curl.
+- Adds the ```mscore-fonts``` & [GFonts](https://fonts.google.com) at system level
 
 ### What versions Supports?
 By the moment **ONLY SUPPORTS Fedora 43**, but I put the list just because yes.
